@@ -99,7 +99,7 @@ function register(ev) {
   loading.value = true;
   store
     .dispatch("register", user)
-    .then(() => {
+    .then((res) => {
       loading.value = false;
       router.push({
         name: "Dashboard",
