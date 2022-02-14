@@ -1,6 +1,5 @@
 # Survey Full Stack Application
 
-Built with these technologies for [YouTube Video](https://youtu.be/WLQDpY7lOLg)
 <table>
     <tr>
         <td>
@@ -22,10 +21,6 @@ Built with these technologies for [YouTube Video](https://youtu.be/WLQDpY7lOLg)
 ## Requirements
 You need to have PHP version **8.0** or above. Node.js version **12.0** or above.
 
-## Demo
-https://yoursurveys.xyz
-
-
 ## Installation
 
 #### Backend
@@ -34,7 +29,8 @@ https://yoursurveys.xyz
 3. Run `composer install`
 4. Create database
 5. Copy `.env.example` into `.env` file and adjust parameters
-6. Run `php artisan serve` to start the project at http://localhost:8000
+6. Run `php artisan migrate` for create migrations table.
+7. Run `php artisan serve` to start the project at http://localhost:8000
 
 #### Frontend
 1. Navigate to `vue` folder using terminal
