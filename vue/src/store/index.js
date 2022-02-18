@@ -38,17 +38,27 @@ const store = createStore({
           return response.data;
         })
     },
+    // method login กำหนด commit เพื่อเรียกใช้ mutations และมีการ รับค่า user มาจาก Login.vue
     login({commit}, user) {
+      // เรียกใช้ axios ส่ง post ไปที่ api/login พร้อมกับค่า user
       return axiosClient.post('/login', user)
+      // รับ Data จาก api กลับมา
         .then(({data}) => {
+          // เรียกใช้ mutations setUser โดยส่งค่า data.user ไปด้วย
           commit('setUser', data.user);
-          commit('setToken', data.token)
+          // เรียกใช้ mutations setToken โดยส่งค่า data.token ไปด้วย
+          commit('setToken', data.token);
+          // return data
           return data;
         })
     },
+    // method logout กำหนด commit เพื่อเรียกใช้ mutations
     logout({commit}) {
+      // เรียกใช้ axios ส่ง post ไปที่ api/logout
       return axiosClient.post('/logout')
+      // รับ response จาก api กลับมา
         .then(response => {
+          // เรียกใช้ mutations logout
           commit('logout')
           return response;
         })
@@ -143,9 +153,13 @@ const store = createStore({
     },
   },
   mutations: {
+    // มีการแก้ไขค่า state
     logout: (state) => {
+      // กำหนด state.user.token = null
       state.user.token = null;
+      // กำหนด state.user.data = {}
       state.user.data = {};
+      // เคลีย session TOKEN
       sessionStorage.removeItem("TOKEN");
     },
 

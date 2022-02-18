@@ -24,6 +24,7 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
+        // Check Request validation
         $data = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|string|unique:users,email',
@@ -50,6 +51,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        // Check request Validation
         $credentials = $request->validate([
             'email' => 'required|email|string|exists:users,email',
             'password' => [
@@ -57,17 +59,21 @@ class AuthController extends Controller
             ],
             'remember' => 'boolean'
         ]);
+        // เก็บค่า remember ไว้ในตัวแปร $remember
         $remember = $credentials['remember'] ?? false;
+        // unset ค่า request remember
         unset($credentials['remember']);
-
+        // เช็ค email ถ้าไม่ตรงกับ password ให้ response error กลับไป
         if (!Auth::attempt($credentials, $remember)) {
             return response([
                 'error' => 'The Provided credentials are not correct'
             ], 422);
         }
+        // เรียกข้อมูล User มาเก็บไว้ใน $user
         $user = Auth::user();
+        // สร้าง token ให้ user
         $token = $user->createToken('main')->plainTextToken;
-
+        // ส่งค่ากลับไป
         return response([
             'user' => $user,
             'token' => $token

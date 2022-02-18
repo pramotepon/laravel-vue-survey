@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div>
     <img
       class="mx-auto h-12 w-auto"
       src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
@@ -99,10 +100,12 @@
       </TButtonLoading>
     </div>
   </form>
+  </div>
 </template>
 
 <script setup>
 import { LockClosedIcon } from "@heroicons/vue/solid";
+// import store
 import store from "../store";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
@@ -110,28 +113,35 @@ import Alert from "../components/Alert.vue";
 import TButtonLoading from "../components/core/TButtonLoading.vue";
 
 const router = useRouter();
-
+// สร้าง data user
 const user = {
   email: "",
   password: "",
 };
 let loading = ref(false);
 let errorMsg = ref("");
-
+// สร้าง ฟังก์ชั่น login
 function login(ev) {
+  // กำหนดให้ไม่รีเฟรชหน้าเว็บ
   ev.preventDefault();
 
   loading.value = true;
+  // เรียกใช้ store
   store
+// เรียกใช้งาน action login พร้อมส่ง data user ไปด้วย
     .dispatch("login", user)
+    // เรียกใช้ method .then
     .then(() => {
       loading.value = false;
+      // แสดงผลหน้า Dashboard
       router.push({
         name: "Dashboard",
       });
     })
+    // ถ้า error
     .catch((err) => {
       loading.value = false;
+      // เก็บ response data โดยเลือกให้ error ของ response.data ที่ส่งกลับมาจาก store/index.js
       errorMsg.value = err.response.data.error;
     });
 }

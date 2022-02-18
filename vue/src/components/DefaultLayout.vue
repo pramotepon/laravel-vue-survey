@@ -213,9 +213,11 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
-
+    // ฟังก์ชั่น logout
     function logout() {
+      // เรียกใช้งาน store actions logout
       store.dispatch("logout").then(() => {
+        // แสดงผลหน้า component Login
         router.push({
           name: "Login",
         });
